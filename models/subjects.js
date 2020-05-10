@@ -7,7 +7,7 @@ const subjectSchema = new mongoose.Schema({
         minlength : 2,
         maxlength : 100
     },
-    classes : {
+    attendance : {
         attended : {
             type : Number,
             default : 0
