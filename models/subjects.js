@@ -19,9 +19,18 @@ const subjectSchema = new mongoose.Schema({
         total : {
             type : Number,
             default : 0
+        },
+        percentage : {
+            type : Number,
+            default : 0
         }
     }
 });
+
+subjectSchema.methods.calculatePercentage = function(){
+    let percentage = (this.attendance.attended/this.attendance.total) * 100;
+    this.attendance.percentage = Math.round(percentage);
+}
 
 const Subject = mongoose.model("Subject", subjectSchema);
 

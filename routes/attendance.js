@@ -6,7 +6,7 @@ let router = express.Router();
 let {Subject} = require('../models/subjects');
 Fawn.init(mongoose);
 
-router.post('/:id', async (req, res) => {
+router.patch('/:id', async (req, res) => {
     const attendanceStatus = req.body.status;
     let updateAttendance = null;
 
@@ -18,18 +18,31 @@ router.post('/:id', async (req, res) => {
         res.send("Invalid request");
     }
     
-    try{
-        new Fawn.Task()
-            .update('subjects', {_id : mongoose.Types.ObjectId(req.params.id)}, {
-                $inc : {'attendance.total' : 1, [updateAttendance] : 1}
-            })
-            .run()
-            .then((result) => {
-                res.send(result);
-            });
-    }catch(err){
-        res.status(500).send(err);
-    }
+    // try{
+    //     new Fawn.Task()
+    //         .update('subjects', {_id : mongoose.Types.ObjectId(req.params.id)}, {
+    //             $inc : {'attendance.total' : 1, [updateAttendance] : 1},
+    //             //$set : {'percentage' : {$multiply:[{$divide:["$attendance.attended", "$attendance.total"]}, 100]}}
+    //             //db.subjects.aggregate()
+    //             //"percent": {$multiply:[{$divide:["$users.votes","$sum"]},100]}
+    //         })
+    //         .run()
+    //         .then((result) => {
+    //             res.send(result);
+    //         });
+    // }catch(err){
+    //     res.status(500).send(err);
+    // }
+
+    let subject = await Subject.findOneAndUpdate(req.params.id, {
+        $inc : {
+                'attendance.total' : 1,
+                [updateAttendance] : 1
+            }
+        }, {new : true});
+            
+    let percentage = await subject.calculatePercentage();
+    res.send(subject);
 });
 
 module.exports = router;

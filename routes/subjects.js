@@ -16,7 +16,6 @@ router.get("/:id", async (req, res) => {
 
 router.post('/', async (req, res) => {
     let subject = new Subject({ title : req.body.title });
-    let attendence
 
     subject = await subject.save();
     res.send(subject);
