@@ -3,10 +3,14 @@ const Fawn = require("fawn");
 const mongoose = require("mongoose");
 let router = express.Router();
 
+let auth = require('../middleware/auth');
+
 let {Subject} = require('../models/subjects');
+let {Logger} = require('../models/logger');
+
 Fawn.init(mongoose);
 
-router.patch('/:id', async (req, res) => {
+router.patch('/:id', auth, async (req, res) => {
     const attendanceStatus = req.body.status;
     let updateAttendance = null;
 
@@ -18,22 +22,6 @@ router.patch('/:id', async (req, res) => {
         res.send("Invalid request");
     }
     
-    // try{
-    //     new Fawn.Task()
-    //         .update('subjects', {_id : mongoose.Types.ObjectId(req.params.id)}, {
-    //             $inc : {'attendance.total' : 1, [updateAttendance] : 1},
-    //             //$set : {'percentage' : {$multiply:[{$divide:["$attendance.attended", "$attendance.total"]}, 100]}}
-    //             //db.subjects.aggregate()
-    //             //"percent": {$multiply:[{$divide:["$users.votes","$sum"]},100]}
-    //         })
-    //         .run()
-    //         .then((result) => {
-    //             res.send(result);
-    //         });
-    // }catch(err){
-    //     res.status(500).send(err);
-    // }
-
     let subject = await Subject.findOneAndUpdate(req.params.id, {
         $inc : {
                 'attendance.total' : 1,
@@ -42,7 +30,20 @@ router.patch('/:id', async (req, res) => {
         }, {new : true});
             
     let percentage = await subject.calculatePercentage();
-    res.send(subject);
+
+    let logDetails = {
+        subject : {
+            _id : subject._id,
+            title : subject.title
+        },
+        attendance : {
+            status : attendanceStatus
+        }
+    }
+
+    let logger = new Logger(logDetails);
+    logger = await logger.save();
+    res.send(logger);
 });
 
 module.exports = router;
