@@ -1,16 +1,19 @@
+// removed fawn dependency 
 const express = require('express');
-const Fawn = require("fawn");
-const mongoose = require("mongoose");
 let router = express.Router();
 
 let auth = require('../middleware/auth');
+let validateObjectId = require('../middleware/validateObjectId')
 
-let {Subject} = require('../models/subjects');
-let {Logger} = require('../models/logger');
+let {Subject, validateAttendance} = require('../models/subjects');
+//let {Logger} = require('../models/logger');
 
-Fawn.init(mongoose);
 
-router.patch('/:id', auth, async (req, res) => {
+router.patch('/:id', [validateObjectId, auth], async (req, res) => {
+    const {error} = validateAttendance({status : req.body.status});
+    if(error) return res.status(400).send(error.details[0].message);
+
+
     const attendanceStatus = req.body.status;
     let updateAttendance = null;
 
@@ -19,7 +22,7 @@ router.patch('/:id', auth, async (req, res) => {
     }else if(attendanceStatus == 'attended'){
         updateAttendance = 'attendance.attended';
     }else{
-        res.send("Invalid request");
+        return res.status(400).send("Invalid status input : Value of status can be from 'missed' or 'attended'");
     }
     
     let subject = await Subject.findOneAndUpdate(req.params.id, {
@@ -29,21 +32,23 @@ router.patch('/:id', auth, async (req, res) => {
             }
         }, {new : true});
             
-    let percentage = await subject.calculatePercentage();
+    await subject.calculatePercentage();
 
-    let logDetails = {
-        subject : {
-            _id : subject._id,
-            title : subject.title
-        },
-        attendance : {
-            status : attendanceStatus
-        }
-    }
+    // unused code for logger, you can remove it safely if logger is not used
+    // let logDetails = {
+    //     subject : {
+    //         _id : subject._id,
+    //         title : subject.title
+    //     },
+    //     attendance : {
+    //         status : attendanceStatus
+    //     }
+    // }
 
-    let logger = new Logger(logDetails);
-    logger = await logger.save();
-    res.send(logger);
+    // let logger = new Logger(logDetails);
+    // logger = await logger.save();
+    res.send(subject);
 });
 
 module.exports = router;
+

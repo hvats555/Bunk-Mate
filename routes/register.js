@@ -6,9 +6,12 @@ const router = express.Router();
 
 
 // Database models
-let {User} = require('../models/users');
+let {User, validateRegistration} = require('../models/users');
 
 router.post("/", async (req, res) => {
+    const {error} = validateRegistration(req.body);
+    if(error) return res.status(400).send(error.details[0].message);
+
     let user = new User(_.pick(req.body, ['name', 'email', 'password']));
     user = await user.save();
 

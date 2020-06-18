@@ -5,7 +5,7 @@ let router = express.Router();
 
 const auth = require('../middleware/auth');
 
-const {User} = require('../models/users');
+const {User, validateLogin} = require('../models/users');
 
 router.get('/me', auth, async (req, res) => {
     let user = await User.findById(req.user._id).select('-password');
@@ -14,11 +14,15 @@ router.get('/me', auth, async (req, res) => {
 
 // Login route
 router.post('/', async (req, res) => {
-    let user = await User.findOne({email : req.body.email});
-    if(!user) return res.status(400).send('Invalid email or password');
+    const {error} = validateLogin(req.body);
+    if(error) return res.status(400).send(error.details[0].message);
 
-    const validPassword = bcrypt.compare(req.body.password, user.password);
-    if(!validPassword) return res.send(400).send('Invalid email or password');
+    let user = await User.findOne({email : req.body.email});
+    if(!user) return res.status(404).send('No user found with given email id');
+
+    const validPassword = await bcrypt.compare(req.body.password, user.password);
+    if(!validPassword) return res.status(401).send('Invalid password');
+    console.log(validPassword);
 
     const token = user.generateAuthToken();
     res.send(token);

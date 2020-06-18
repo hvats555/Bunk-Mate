@@ -1,8 +1,10 @@
 const mongoose = require("mongoose");
+const Joi = require("@hapi/joi");
+Joi.objectId = require('joi-objectid')(Joi);
 
 const subjectSchema = new mongoose.Schema({
     user : {
-        id : {
+        _id : {
             type : mongoose.Schema.Types.ObjectId,
             ref : 'User',
             required : true
@@ -39,6 +41,37 @@ subjectSchema.methods.calculatePercentage = function(){
     this.attendance.percentage = Math.round(percentage);
 }
 
+const validateSubjects = (subject, isNew) => {
+    let subjectObject = {
+        title : Joi.string().min(2).max(100).required()
+    }
+
+    if(isNew.new){
+        subjectObject = {
+            title : Joi.string().min(2).max(100).required(),
+            user : {
+                _id : Joi.objectId().required()
+            }
+        }
+    }
+
+    const schema = Joi.object(subjectObject);
+
+    return schema.validate(subject);
+}
+
+const validateAttendance = (attendance) => {
+    let attendanceObject = {
+        status : Joi.string().min(6).max(9).required()
+    }
+
+    const schema = Joi.object(attendanceObject);
+
+    return schema.validate(attendance);
+}
+
 const Subject = mongoose.model("Subject", subjectSchema);
 
 exports.Subject = Subject;
+exports.validateSubjects = validateSubjects;
+exports.validateAttendance = validateAttendance;
