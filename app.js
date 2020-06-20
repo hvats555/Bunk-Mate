@@ -8,7 +8,7 @@ require("./startup/logging")();
 require("./startup/routes")(app);
 require("./startup/prod")(app);
 
-let port = process.env.port || 3000;
+let port = process.env.PORT || 3000;
 
 let server = app.listen(port, () => {
     winston.info(`Server is happily running on port : ${port}`);
