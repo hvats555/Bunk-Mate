@@ -1,4 +1,3 @@
-// removed fawn dependency 
 const express = require('express');
 let router = express.Router();
 
@@ -6,8 +5,6 @@ let auth = require('../middleware/auth');
 let validateObjectId = require('../middleware/validateObjectId')
 
 let {Subject, validateAttendance} = require('../models/subjects');
-//let {Logger} = require('../models/logger');
-
 
 router.patch('/:id', [validateObjectId, auth], async (req, res) => {
     const {error} = validateAttendance({status : req.body.status});
@@ -34,19 +31,6 @@ router.patch('/:id', [validateObjectId, auth], async (req, res) => {
             
     await subject.calculatePercentage();
 
-    // unused code for logger, you can remove it safely if logger is not used
-    // let logDetails = {
-    //     subject : {
-    //         _id : subject._id,
-    //         title : subject.title
-    //     },
-    //     attendance : {
-    //         status : attendanceStatus
-    //     }
-    // }
-
-    // let logger = new Logger(logDetails);
-    // logger = await logger.save();
     res.send(subject);
 });
 

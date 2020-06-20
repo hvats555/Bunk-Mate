@@ -4,7 +4,11 @@
   "description": "Attandence tracking app",
   "main": "app.js",
   "scripts": {
-    "test": "jest --runInBand --coverage --watchAll"
+    "test": "jest --runInBand --coverage --watchAll",
+    "start": "node app.js"
+  },
+  "engines": {
+    "node": "12.16.1"
   },
   "author": "Himalaya vats",
   "license": "ISC",
@@ -14,12 +18,15 @@
     "config": "^3.3.1",
     "debug": "^4.1.1",
     "express": "^4.17.1",
+    "express-async-errors": "^3.1.1",
     "joi-objectid": "^3.0.1",
     "jsonwebtoken": "^8.5.1",
     "lodash": "^4.17.15",
     "mongoose": "^5.9.11",
     "nodemon": "^2.0.4",
-    "validator": "^13.0.0"
+    "validator": "^13.0.0",
+    "winston": "^3.2.1",
+    "winston-mongodb": "^5.0.1"
   },
   "devDependencies": {
     "chai": "^4.2.0",
