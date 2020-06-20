@@ -14,3 +14,15 @@
 {"message":"Cannot connect to  ERROR : MongoParseError: Invalid connection string","level":"error"}
 {"message":"Server is happily running on port : 3000","level":"info"}
 {"message":"Connected to mongodb://localhost/bunkMate","level":"info"}
+{"message":"Server is happily running on port : 3000","level":"info"}
+{"message":"Connected to mongodb://localhost/bunkMate","level":"info"}
+{"message":"Server is happily running on port : 3000","level":"info"}
+{"message":"Connected to mongodb://localhost/bunkMate","level":"info"}
+{"message":"Server is happily running on port : 3000","level":"info"}
+{"message":"Connected to mongodb://localhost/bunkMate","level":"info"}
+{"message":"Server is happily running on port : 3000","level":"info"}
+{"message":"Connected to mongodb://localhost/bunkMate","level":"info"}
+{"message":"Server is happily running on port : 3000","level":"info"}
+{"message":"Connected to mongodb://localhost/bunkMate","level":"info"}
+{"message":"Server is happily running on port : 3000","level":"info"}
+{"message":"Connected to mongodb://localhost/bunkMate","level":"info"}
