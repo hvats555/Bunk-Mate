@@ -26,3 +26,5 @@
 {"message":"Connected to mongodb://localhost/bunkMate","level":"info"}
 {"message":"Server is happily running on port : 3000","level":"info"}
 {"message":"Connected to mongodb://localhost/bunkMate","level":"info"}
+{"message":"Server is happily running on port : 3000","level":"info"}
+{"message":"Connected to mongodb+srv://himalayavats:mIuQXhOM2WFHgbmM@cluster0.qnbkg.mongodb.net/bunkMate?retryWrites=true","level":"info"}
