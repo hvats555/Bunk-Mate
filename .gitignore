@@ -1,4 +1,5 @@
-*.log
+logfile.log
+uncaughtExceptions.log
 node_modules/
 .idea/
 coverage/
