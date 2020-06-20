@@ -1,4 +1,7 @@
+*.log
 node_modules/
 .idea/
 coverage/
 .nyc_output/
+
+
