@@ -1,10 +1,12 @@
 const express = require("express");
 const winston = require("winston");
+const config = require("config");
 let app = express();
 
 require("./startup/db")();
 require("./startup/logging")();
 require("./startup/routes")(app);
+require("./startup/prod")(app);
 
 let port = process.env.port | 3000;
 

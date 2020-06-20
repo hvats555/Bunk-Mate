@@ -1,3 +1,4 @@
 {
-    "database" : "mongodb://localhost/bunkMate"
+    "privateKey" : "",
+    "database" : ""
 }
