@@ -162,7 +162,7 @@ value: JWT Auth Token
     
     
 **Route:** ``` /subjects/{subject_id} ``` <br />
-**Method:** ```GET`` <br />
+**Method:** ```GET``` <br />
 **Description:** Get a single subject <br />
 
 
@@ -192,7 +192,7 @@ value: JWT Auth Token
     }
     
 **Route:** ``` /subjects/{subject_id} ``` <br />
-**Method:** ```DELETE`` <br />
+**Method:** ```DELETE``` <br />
 **Description:** Delete a subject  <br />
 
 
@@ -223,7 +223,7 @@ value: JWT Auth Token
 ## Marking the attendance
 
 **Route:** ``` }/attendance/{subject_id} ``` <br />
-**Method:** ```PATCH`` <br />
+**Method:** ```PATCH``` <br />
 **Description:** Mark the attendance  <br />
 
 ###### Body :
