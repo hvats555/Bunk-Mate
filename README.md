@@ -222,14 +222,14 @@ value: JWT Auth Token
     
 ## Marking the attendance
 
-**Route:** ``` }/attendance/{subject_id} ``` <br />
+**Route:** ``` /attendance/{subject_id} ``` <br />
 **Method:** ```PATCH``` <br />
 **Description:** Mark the attendance  <br />
 
 ###### Body :
 **Status** 
-"missed": If class is missed
-"attended" : If class is attended
+"missed": If class is missed <br />
+"attended" : If class is attended <br />
 
     {
       "status" : "missed"
