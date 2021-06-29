@@ -3,6 +3,9 @@
 # Bunk-Mate
 Bunk-Mate is an attendance manager API especially for collage students to manage their attendance.
 
+Live app link : 
+https://bunk-mate.herokuapp.com/
+
 ## Table of contents
 
 * Authentication
